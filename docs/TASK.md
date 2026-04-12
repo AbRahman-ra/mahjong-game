@@ -35,7 +35,8 @@ Note: This project should be built with the future in mind. During the onsite in
 
 - Navigation: A button to exit the game and return to the landing page.
 - Betting: Two primary actions: "Bet Higher" or "Bet Lower" for the next hand.
-- Visual State: \* Display the current hand's total value and visual representations of the tiles.
+- Visual State:
+    - Display the current hand's total value and visual representations of the tiles.
     - Display a "History" view showing smaller versions of the previous hand's tiles and values.
 - Score Summary: An end-of-game screen displaying the final score.
 
@@ -50,6 +51,7 @@ Note: This project should be built with the future in mind. During the onsite in
 ---
 
 ## Submission Instructions
+
 1. Repository: Provide a link to a public GitHub repository.
 2. Documentation: Include a README.md with setup instructions and a brief note on what was handwritten vs. where AI was utilized.
 3. Video Walkthrough: Record a short video demonstrating the gameplay and your technical approach.
