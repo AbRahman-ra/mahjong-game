@@ -17,27 +17,37 @@
 - Feedback: 50% understanding, let's dig deeper
     - What are the names of each tile set? What are dragons, winds, numbers? [Answer](https://en.wikipedia.org/wiki/Mahjong_tiles#Contents)
 - From [this page](https://en.wikipedia.org/wiki/Mahjong#Other_variants) and [this page](https://en.wikipedia.org/wiki/American_mahjong) it seems there are multiple variants of the game, so, it's time for AI help 😁
-    - Model: Claude Sonnet / Opus 4.6
 
-```md
-Prompt: Read this task, is this a specific known variant of Mahong, or it's a custom variant? <ATTACHED_TASK_TEXT>
-Answer: This is a **custom/invented variant** — it does not match any known Mahjong game. Here's the breakdown:
+### Unclear problem statement
 
-**What it borrows from Mahjong:**
+- There were unclear questions
+    - What are the winning conditions?
+    - How much is the hand (i.e how many tiles drawn per turn)?
+    - What is the tile distribution? i.e How many copies of each tile?
+    - What happens if two hands have equal total value (tie)?
+    - Does the player lose immediately after a wrong bet? Or continues until the game over / win / lose conditions
+- Penny's answer:
+    ```
+    Hi Abdurrahman,
+    Feel free to assume the answers following the standard rules wherever possible.
+    ```
 
-- The tile set (number tiles, Dragons, Winds)
-- Terminology like "hand," "draw pile," and "discard pile"
+**So, we will ask AI for some assumptions**
 
-**What makes it completely custom:**
+- chats are in [this file](AI.md)
 
-The core mechanic — betting **Higher or Lower on the total value of the next hand** — is actually a **card/tile prediction game** in the vein of classic "Hi-Lo" or "Higher or Lower" games (think the card game Acey Deucey or the TV game _Play Your Cards Right_), not Mahjong at all. In real Mahjong, no variant asks players to predict whether the next hand's _total point value_ will be higher or lower.
+### The end
 
-The other mechanics are also invented:
+- Since there is no tech stack mentioned, claude suggests to use Vue + pinia
+- Claude suggests to make the application as an SPA (with no backend) since the deadline is quite tight
 
-- **Tile value scaling** (non-number tiles starting at 5 and going up/down based on win/loss history) — doesn't exist in any standard variant
-- **Game-over at tile value 0 or 10** — not a Mahjong concept
-- **Draw pile exhausting 3 times = game over** — not a Mahjong concept
-- **Single-player solo session with a leaderboard** — traditional Mahjong is 4-player
+---
 
-**In short:** The company dressed up a **Hi-Lo prediction/betting game** in Mahjong clothing. They're using Mahjong tiles as the theme/skin, but the actual game logic is an original invention. You don't need any Mahjong domain knowledge to build it — just treat the tiles as numbered/valued cards in a custom deck.
-```
+## 2nd Milestone: plan the architecture
+
+- The thoughts are evolving around core/shell concept (hexagonal, onion, clean) with events
+- Seaprating logic from component allows to create a scalable and decoupled logic 
+- What's better than a paper and a pen for brainstorming?
+
+![page1](../assets/page1.jpeg)
+![page2](../assets/page2.jpeg)
