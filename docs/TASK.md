@@ -21,7 +21,7 @@ Note: This project should be built with the future in mind. During the onsite in
 - Tile Values:
     - Number Tiles: Value equals the face value of the tile.
     - Non-Number Tiles (Dragons/Winds): Start at a base value of 5.
-    - Dynamic Scaling: Every time a non-number tile is part of a winning hand, its value increases by 1. If it is part of a losing hand, it decreases by 1 (specific to that tile).
+- Dynamic Scaling: Every time a non-number tile is part of a winning hand, its value increases by 1. If it is part of a losing hand, it decreases by 1 (specific to that tile).
 -Deck Management:
     - Display the count of tiles remaining in the Draw Pile and the Discard Pile.
     - Reshuffling: When the Draw Pile is empty, add a fresh "deck" worth of tiles, combine them with the Discard Pile, and shuffle them into a new Draw Pile.  
