@@ -1,6 +1,11 @@
 import * as GS from "../domain/model/GameState"
 import * as Settings from "../domain/config/Settings";
 
+/**
+ * @package
+ * @param state 
+ * @returns 
+ */
 export const isGameOver = (state: GS.GameState): GS.GameOverReason | undefined => {
     if (isReshuffleLimitReached(state)) return GS.GameOverReason.RESHUFFLE_LIMIT;
 

@@ -50,3 +50,8 @@ export const DYNAMIC_SCALER: Readonly<Record<BetOutcome, number>> = {
     [BetOutcome.WIN]: 1,
     [BetOutcome.LOSE]: -1
 };
+
+/**
+ * Leaderboard size
+ */
+export const LEADERBOARD_SIZE = 5;
