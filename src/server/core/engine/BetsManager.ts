@@ -12,7 +12,6 @@ import { GameHistoryRecord } from "../domain/model/GameHistoryRecord";
  * Records the bet and draws the next hand.
  * Handles draw pile exhaustion — caller receives reshuffled flag to publish PileOutage.
  * Transitions to REVEALING phase.
- * @package
  */
 export const placeBet = (state: GS.GameState, bet: Bet.BetDirection): GS.GameState => {
     let drawPile = state.drawPile;

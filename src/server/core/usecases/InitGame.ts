@@ -1,7 +1,7 @@
 import { IInitGameService } from "../ports/in/IGameService";
 import { IGameRepo } from "../ports/out/IGameRepo";
 import { GameState } from "../domain/model/GameState";
-import * as GameInitializer from "../engine/GameInitializer";
+import * as ENGINE from "../engine/GameEngine";
 
 export class InitGame implements IInitGameService {
     constructor(
@@ -9,7 +9,7 @@ export class InitGame implements IInitGameService {
     ) {}
 
     async initGame(): Promise<GameState> {
-        const state = GameInitializer.initGame();
+        const state = ENGINE.initGame();
         await this.gameRepo.save(state);
         return state;
     }

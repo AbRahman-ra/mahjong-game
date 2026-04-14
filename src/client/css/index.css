@@ -1,0 +1,10 @@
+/* vite will yell at us if we import it normally */
+@import "@/client/css/variables.css";
+
+@import "./globals.css";
+@import "./typography.css";
+@import "./layout.css";
+@import "./panel.css";
+@import "./buttons.css";
+@import "./transitions.css";
+@import "./responsive.css";

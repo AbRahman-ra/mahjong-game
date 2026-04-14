@@ -1,0 +1,14 @@
+/* ROUTS ANIMATIONS */
+
+.screen-fade-enter-active,
+.screen-fade-leave-active {
+    transition:
+        opacity 220ms ease,
+        transform 220ms ease;
+}
+
+.screen-fade-enter-from,
+.screen-fade-leave-to {
+    opacity: 0;
+    transform: translateY(10px);
+}

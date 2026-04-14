@@ -1,0 +1,27 @@
+.panel {
+    backdrop-filter: blur(14px);
+    background: linear-gradient(
+        180deg,
+        rgba(14, 27, 43, 0.82),
+        rgba(8, 19, 31, 0.78)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.6rem;
+    padding: 1.35rem;
+    box-shadow: var(--shadow);
+}
+
+.panel-accent {
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(244, 182, 107, 0.18),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at left,
+            rgba(98, 193, 177, 0.14),
+            transparent 32%
+        ),
+        linear-gradient(180deg, rgba(18, 34, 52, 0.9), rgba(8, 19, 31, 0.86));
+}

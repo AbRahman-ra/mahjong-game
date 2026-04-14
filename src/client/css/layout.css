@@ -1,0 +1,46 @@
+.app-shell {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: 2rem;
+}
+
+/* AMBIENT BG ORBITS */
+
+.ambient {
+    position: fixed;
+    width: 30rem;
+    height: 30rem;
+    border-radius: 50%;
+    filter: blur(24px);
+    opacity: 0.32;
+    pointer-events: none;
+}
+
+.ambient-left {
+    top: -8rem;
+    left: -8rem;
+    background: radial-gradient(
+        circle,
+        rgba(98, 193, 177, 0.42),
+        transparent 65%
+    );
+}
+
+.ambient-right {
+    right: -10rem;
+    bottom: -8rem;
+    background: radial-gradient(
+        circle,
+        rgba(244, 182, 107, 0.38),
+        transparent 62%
+    );
+}
+
+/* MAX-WIDTH WRAPPER */
+
+.layout-shell {
+    position: relative;
+    width: min(100%, 84rem);
+    margin: 0 auto;
+}

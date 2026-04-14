@@ -8,6 +8,7 @@
         "noEmit": true,
         "skipLibCheck": true,
         "jsx": "preserve",
-        "types": ["bun"]
+        "types": ["bun"],
+        "paths": { "@/*": ["./src/*"] }
     }
 }

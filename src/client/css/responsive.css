@@ -1,0 +1,9 @@
+@media (max-width: 640px) {
+    .app-shell {
+        padding: 1rem;
+    }
+
+    .panel {
+        padding: 1rem;
+    }
+}
