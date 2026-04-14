@@ -1,5 +1,5 @@
-import { SinglePositiveDigit } from "./SinglePositiveDigit";
-import { NonNumberTileType, NumberTileType } from "./TileType";
+import { SinglePositiveDigit } from "./NumberTileValues";
+import { NonNumberTileGroup, NumberTileGroup } from "./TileGroup";
 
 export type Tile = NumberTile | NonNumberTile;
 
@@ -7,21 +7,21 @@ export type Tile = NumberTile | NonNumberTile;
  * values are managed by store
  */
 export interface NonNumberTile {
-    readonly type: NonNumberTileType;
+    readonly type: NonNumberTileGroup;
 }
 
 export interface NumberTile {
-    readonly type: NumberTileType;
+    readonly type: NumberTileGroup;
     readonly value: SinglePositiveDigit;
 }
 
 export const isNumberTile = (t: Tile): t is NumberTile =>
-    t.type === NumberTileType.NUMBER;
+    t.type === NumberTileGroup.NUMBER;
 
 export const isNonNumberTile = (t: Tile): t is NonNumberTile =>
-    t.type === NonNumberTileType.WIND || t.type === NonNumberTileType.DRAGON;
+    t.type === NonNumberTileGroup.WIND || t.type === NonNumberTileGroup.DRAGON;
 
 export const value = (
     tile: Tile,
-    honorValues: Readonly<Record<NonNumberTileType, number>>,
+    honorValues: Readonly<Record<NonNumberTileGroup, number>>,
 ): number => (isNonNumberTile(tile) ? honorValues[tile.type] : tile.value);

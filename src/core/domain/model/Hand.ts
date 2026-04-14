@@ -1,5 +1,5 @@
-import { NON_NUMBER_TILES_BASE_VALUES } from "../config/Settings";
 import { Tile, value } from "./Tile";
+import { NonNumberTileGroup } from "./TileGroup";
 
 export interface Hand {
     readonly tiles: readonly Tile[];
@@ -8,8 +8,11 @@ export interface Hand {
 
 // factory
 export const newHand = (
-    tiles: Tile[]
+    tiles: Tile[],
+    map: Readonly<Record<NonNumberTileGroup, number>>
 ): Hand => ({
     tiles,
-    total: tiles.reduce((sum, t) => sum + value(t, NON_NUMBER_TILES_BASE_VALUES), 0),
+    total: handTotal(tiles, map),
 });
+
+export const handTotal = (tiles: Tile[], map: Readonly<Record<NonNumberTileGroup, number>>) => tiles.reduce((sum, t) => sum + value(t, map), 0)
