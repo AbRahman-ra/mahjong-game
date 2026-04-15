@@ -2,30 +2,28 @@
     color-scheme: dark;
 
     /* BG */
-    --bg:           #08131f;
-    --bg-soft:      #13253a;
-    --panel:        rgba(8, 19, 31, 0.76);
+    --bg: #08131f;
+    --bg-soft: #13253a;
+    --panel: rgba(8, 19, 31, 0.76);
     --panel-strong: rgba(15, 28, 43, 0.88);
-    
+
     /* ACCENT */
-    --gold:      #f4b66b;
+    --gold: #f4b66b;
     --gold-soft: #ffe3bb;
-    --teal:      #62c1b1;
-    --rose:      #de7869;
+    --teal: #62c1b1;
+    --rose: #de7869;
 
     /* TEXT */
-    --paper:    #f7f1e7;
-    --ink:      #eff5ff;
+    --paper: #f7f1e7;
+    --ink: #eff5ff;
     --ink-soft: rgba(239, 245, 255, 0.72);
 
     /* TILES */
-    --tile-character:    #d57d59;
-    --tile-bamboo:       #6cbf92;
-    --tile-dots:         #67a0df;
-    --tile-wind:         #a9bacd;
-    --tile-dragon-red:   #d85d5d;
-    --tile-dragon-green: #62b26e;
-    --tile-dragon-white: #d7dde7;
+    --tile-character: #d57d59;
+    --tile-bamboo: #6cbf92;
+    --tile-dots: #67a0df;
+    --tile-wind: #a9bacd;
+    --tile-dragon: #d85d5d;
 
     /* MISC */
     --shadow: 0 22px 60px rgba(0, 0, 0, 0.28);

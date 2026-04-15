@@ -1,18 +1,19 @@
-import { SinglePositiveDigit } from "./NumberTileValues";
-import { NonNumberTileGroup, NumberTileGroup } from "./TileGroup";
+import { NonNumberTileGroup, NumberTileGroup, TileGroup } from "./TileGroup";
 
 export type Tile = NumberTile | NonNumberTile;
+
+export interface NumberTile {
+    readonly id: string;
+    readonly type: NumberTileGroup;
+    readonly value: number;
+}
 
 /**
  * values are managed by store
  */
 export interface NonNumberTile {
+    readonly id: string;
     readonly type: NonNumberTileGroup;
-}
-
-export interface NumberTile {
-    readonly type: NumberTileGroup;
-    readonly value: SinglePositiveDigit;
 }
 
 export const isNumberTile = (t: Tile): t is NumberTile =>

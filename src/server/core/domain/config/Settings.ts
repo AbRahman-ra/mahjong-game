@@ -1,41 +1,35 @@
 import { BetOutcome } from "../model/Bet";
-import { NumberTileGroup, NonNumberTileGroup } from "../model/TileGroup";
+import { NumberTileGroup, NonNumberTileGroup, TileGroup } from "../model/TileGroup";
 
 // system configurations (hand size, number of copies, etc...)
-
 /**
- * Base value for each non-number tile
+ * Tile groups info
  */
-export const NON_NUMBER_TILES_BASE_VALUES: Readonly<
-    Record<NonNumberTileGroup, number>
-> = {
-    [NonNumberTileGroup.DRAGON]: 5,
-    [NonNumberTileGroup.WIND]: 5,
+export const TILE_GROUPS: Readonly<Record<NumberTileGroup | NonNumberTileGroup, TileGroup>> = {
+    [NumberTileGroup.NUMBER]: {
+        type: NumberTileGroup.NUMBER,
+        copies: 4,
+        accent: "#6cbf92",
+        dynamicScaler: { [BetOutcome.WIN]: 0, [BetOutcome.LOSE]: 0 },
+        possibleValues: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    },
+    [NonNumberTileGroup.WIND]: {
+        type: NonNumberTileGroup.WIND,
+        copies: 4,
+        accent: "#a9bacd",
+        dynamicScaler: { [BetOutcome.WIN]: 1, [BetOutcome.LOSE]: -1 },
+        baseValue: 5,
+    },
+    [NonNumberTileGroup.DRAGON]: {
+        type: NonNumberTileGroup.DRAGON,
+        copies: 4,
+        accent: "#d85d5d",
+        dynamicScaler: { [BetOutcome.WIN]: 1, [BetOutcome.LOSE]: -1 },
+        baseValue: 5,
+    },
 };
 
 export const HAND_SIZE = 4;
-
-/**
- * Custom map specifying the copies for each tiletype
- */
-export const TILE_COPIES: Readonly<
-    Record<NumberTileGroup | NonNumberTileGroup, number>
-> = {
-    [NumberTileGroup.NUMBER]: 5,
-    [NonNumberTileGroup.DRAGON]: 5,
-    [NonNumberTileGroup.WIND]: 5,
-};
-
-/**
- * Number of tiles for each suit
- */
-export const TILES_PER_GROUP: Readonly<
-    Record<NumberTileGroup | NonNumberTileGroup, number>
-> = {
-    [NumberTileGroup.NUMBER]: 9,
-    [NonNumberTileGroup.DRAGON]: 1,
-    [NonNumberTileGroup.WIND]: 1,
-};
 
 /**
  * Fixed number of copies for all tiletypes (less maintainability)
@@ -57,21 +51,10 @@ export const GAME_OVER_CONDITIONS = {
 export const MIN_POSSIBLE_SCORE: number | undefined = undefined;
 
 /**
- * Dynamic scale values for non number tiles after betting
- */
-export const DYNAMIC_SCALER: Readonly<Record<BetOutcome, number>> = {
-    [BetOutcome.WIN]: 1,
-    [BetOutcome.LOSE]: -1,
-};
-
-/**
  * Leaderboard size
  */
 export const LEADERBOARD_SIZE = 5;
 
-export const DECK_SIZE: number = (
-    Object.entries(TILES_PER_GROUP) as [
-        NumberTileGroup | NonNumberTileGroup,
-        number,
-    ][]
-).reduce((sum, [k, v]) => sum + v * TILE_COPIES[k], 0);
+export const DECK_SIZE: number = Object.values(TILE_GROUPS).reduce((sum, g) =>
+    sum + (g.possibleValues?.length ?? 1) * g.copies, 0
+);

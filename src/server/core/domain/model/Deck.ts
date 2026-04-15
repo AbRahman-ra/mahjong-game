@@ -1,8 +1,6 @@
-// core/domain/model/Deck.ts
 import * as Settings from "../config/Settings";
 import * as ArrayHelper from "../../shared/helpers/ArrayHelper";
-import { NonNumberTileGroup, NumberTileGroup } from "./TileGroup";
-import * as NumberTileValues from "./NumberTileValues";
+import * as TG from "./TileGroup";
 import { NonNumberTile, NumberTile, Tile } from "./Tile";
 
 /**
@@ -14,9 +12,9 @@ export type Deck = Tile[];
  * Factory method
  */
 export const newDeck = (): Deck => ArrayHelper.shuffle([
-    ...buildNumberTiles(NumberTileGroup.NUMBER),
-    ...buildNonNumberTiles(NonNumberTileGroup.WIND),
-    ...buildNonNumberTiles(NonNumberTileGroup.DRAGON),
+    ...buildNumberTiles(TG.NumberTileGroup.NUMBER),
+    ...buildNonNumberTiles(TG.NonNumberTileGroup.WIND),
+    ...buildNonNumberTiles(TG.NonNumberTileGroup.DRAGON),
 ]);
 
 /**
@@ -32,18 +30,19 @@ export const draw = (
 });
 
 // ============================ HELPERS ============================
-const buildNumberTiles = (type: NumberTileGroup): NumberTile[] => {
-    return NumberTileValues.NUMBER_TILES_POSSIBLE_VALUES[type]
-        .flatMap(n =>
-            Array.from({ length: Settings.TILE_COPIES[type] },
-                () => ({ type, value: n } as NumberTile)
-            )
-        );
+const buildNumberTiles = (type: TG.NumberTileGroup): NumberTile[] => {
+    const group = Settings.TILE_GROUPS[type];
+    return (group.possibleValues ?? []).flatMap(n =>
+        Array.from({ length: group.copies },
+            () => ({ id: crypto.randomUUID(), type, value: n})
+        )
+    );
 };
 
-const buildNonNumberTiles = (type: NonNumberTileGroup): NonNumberTile[] => {
+const buildNonNumberTiles = (type: TG.NonNumberTileGroup): NonNumberTile[] => {
+    const group = Settings.TILE_GROUPS[type];
     return Array.from(
-        { length: Settings.TILE_COPIES[type] },
-        () => ({ type } as NonNumberTile)
+        { length: group.copies },
+        () => ({ id: crypto.randomUUID(), type })
     );
 };

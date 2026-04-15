@@ -9,14 +9,12 @@ export const scaleHonorValues = (
     outcome: BetOutcome,
     honorValues: Readonly<Record<NonNumberTileGroup, number>>,
 ): Record<NonNumberTileGroup, number> => {
-    const delta = Settings.DYNAMIC_SCALER[outcome];
     const updated = { ...honorValues };
 
-    hand.tiles
-        .filter(isNonNumberTile)
-        .forEach(tile => {
-            updated[tile.type] = honorValues[tile.type] + delta;
-        });
+    hand.tiles.filter(isNonNumberTile).forEach((tile) => {
+        const delta = Settings.TILE_GROUPS[tile.type].dynamicScaler[outcome];
+        updated[tile.type] = honorValues[tile.type] + delta;
+    });
 
     return updated;
 };

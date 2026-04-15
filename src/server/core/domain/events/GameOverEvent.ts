@@ -1,4 +1,4 @@
-import { GameOverReason, GamePhase } from "../model/GameState";
+import { GameOverReason } from "../model/GameState";
 import { GameEvent } from "./Event";
 
 export interface GameOverEvent extends GameEvent<Context> { }
