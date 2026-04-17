@@ -3,7 +3,7 @@
 import { computed, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useGameStore } from '@/client/store/gameStore';
-import TileCard from '@/client/components/TileCard.vue';
+import TileCard from '@/client/ui/components/TileCard.vue';
 import { BetOutcome } from '@/server/core/domain/model/Bet';
 
 const gameStore = useGameStore();

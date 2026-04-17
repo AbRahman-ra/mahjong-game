@@ -3,13 +3,13 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGameStore } from '@/client/store/gameStore';
 
-import GameTopbar from '@/client/pages/game/partials/Topbar.vue';
-import GameTable from '@/client/pages/game/partials/GameTable.vue';
-import HandHistory from '@/client/pages/game/partials/HandHistory.vue';
-import ExitConfirmDialog from '@/client/pages/game/partials/ExitConfirmDialog.vue';
+import GameTopbar from '@/client/ui/pages/game/partials/Topbar.vue';
+import GameTable from '@/client/ui/pages/game/partials/GameTable.vue';
+import HandHistory from '@/client/ui/pages/game/partials/HandHistory.vue';
+import ExitConfirmDialog from '@/client/ui/pages/game/partials/ExitConfirmDialog.vue';
 import ResolutionBanner from './partials/ResolutionBanner.vue';
 import CurrentHand from './partials/CurrentHand.vue';
-import BetControls from '@/client/components/BetControls.vue';
+import BetControls from '@/client/ui/components/BetControls.vue';
 import { storeToRefs } from 'pinia';
 import { BetDirection } from '@/server/core/domain/model/Bet';
 

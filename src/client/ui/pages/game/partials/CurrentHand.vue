@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useGameStore } from '@/client/store/gameStore';
-import TileCard from '@/client/components/TileCard.vue';
+import TileCard from '@/client/ui/components/TileCard.vue';
 
 const gameStore = useGameStore();
 const { currentHand, honorValues, isBetting } = storeToRefs(gameStore);

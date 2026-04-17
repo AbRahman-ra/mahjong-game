@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import Leaderboard from '@/client/components/Leaderboard.vue';
-import LandingViewHeroPanel from '@/client/pages/landing/partials/LandingViewHeroPanel.vue';
+import Leaderboard from '@/client/ui/components/Leaderboard.vue';
+import LandingViewHeroPanel from '@/client/ui/pages/landing/partials/LandingViewHeroPanel.vue';
 import { useGameStore } from '@/client/store/gameStore';
 import { useLeaderboardStore } from '@/client/store/leaderboardStore';
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useGameStore } from '@/client/store/gameStore';
-import ScoreDisplay from '@/client/components/ScoreDisplay.vue';
+import ScoreDisplay from '@/client/ui/components/ScoreDisplay.vue';
 import PileCounters from './PileCounters.vue';
 import ExitButton from '../../../components/ExitButton.vue';
 

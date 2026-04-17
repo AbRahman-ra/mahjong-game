@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DropDownButton from '@/client/components/DropDownButton.vue';
+import DropDownButton from '@/client/ui/components/DropDownButton.vue';
 import { computed, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useGameStore } from '@/client/store/gameStore';
@@ -90,11 +90,13 @@ const isExpanded = ref(false);
     }
 
     .pile-counters {
-        gap: 0;  /* Remove gap from collapsed dropdown */
+        gap: 0;
+        /* Remove gap from collapsed dropdown */
     }
 
     .wrapper--expanded .pile-counters {
-        gap: 0.75rem;  /* restore gap when expanded */
+        gap: 0.75rem;
+        /* restore gap when expanded */
     }
 
     .counters-dropdown {

@@ -7,12 +7,13 @@ const router = createRouter({
         {
             path: "/",
             name: "landing",
-            component: () => import("@/client/pages/landing/LandingView.vue"),
+            component: () =>
+                import("@/client/ui/pages/landing/LandingView.vue"),
         },
         {
             path: "/game",
             name: "game",
-            component: () => import("@/client/pages/game/GameView.vue"),
+            component: () => import("@/client/ui/pages/game/GameView.vue"),
             beforeEnter: () => {
                 // prevent navigating to game without an active session
                 const gameStore = useGameStore();
@@ -22,7 +23,7 @@ const router = createRouter({
         {
             path: "/end",
             name: "end",
-            component: () => import("@/client/pages/end/EndView.vue"),
+            component: () => import("@/client/ui/pages/end/EndView.vue"),
             beforeEnter: () => {
                 // only reachable from game over state
                 const gameStore = useGameStore();

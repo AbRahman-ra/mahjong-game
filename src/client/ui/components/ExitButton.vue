@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LeaveIcon from "@/client/icons/LeaveIcon.vue"
+import LeaveIcon from "@/client/ui/icons/LeaveIcon.vue"
 
 defineEmits<{
     exit: [];

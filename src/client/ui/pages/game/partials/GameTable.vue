@@ -1,7 +1,7 @@
 <!-- client/views/partials/GameTable.vue -->
 <script setup lang="ts">
-import DrawPile from '@/client/pages/game/partials/DrawPile.vue';
-import DiscardPile from '@/client/pages/game/partials/DiscardPile.vue';
+import DrawPile from '@/client/ui/pages/game/partials/DrawPile.vue';
+import DiscardPile from '@/client/ui/pages/game/partials/DiscardPile.vue';
 </script>
 
 <template>

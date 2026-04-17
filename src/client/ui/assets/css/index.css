@@ -1,5 +1,5 @@
 /* vite will yell at us if we import it normally */
-@import "@/client/css/variables.css";
+@import "@/client/ui/assets/css/variables.css";
 
 @import "./globals.css";
 @import "./typography.css";

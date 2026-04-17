@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import DownArrow from "@/client/icons/DownArrow.vue";
+import DownArrow from "@/client/ui/icons/DownArrow.vue";
 
 const emit = defineEmits<{ expanded: [value: boolean] }>();
 
