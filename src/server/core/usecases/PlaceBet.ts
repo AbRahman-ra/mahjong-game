@@ -53,7 +53,8 @@ export class PlaceBet implements IPlaceBetService {
         await this.repo.save(afterResolveState);
 
         // publish resolved bet
-        const lastRecord = afterResolveState.history[afterResolveState.history.length - 1];
+        // const lastRecord = afterResolveState.history[afterResolveState.history.length - 1];
+        const lastRecord = afterResolveState.history.at(-1)!;
         const type = lastRecord.outcome === BET.BetOutcome.WIN ? GEVENT.GameEventType.SUCCESSFUL_BET : GEVENT.GameEventType.UNSUCCESSFUL_BET;
         let { hand, scoreChange } = lastRecord;
         let resolveEvent: GEVENT.GameEvent<GEVENT.BetResolvedContext> = {type, data: { hand, scoreChange }}

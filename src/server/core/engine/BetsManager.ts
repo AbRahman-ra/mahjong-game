@@ -28,7 +28,12 @@ export const placeBet = (state: GS.GameState, bet: Bet.BetDirection): GS.GameSta
             gameOverReason: GS.GameOverReason.RESHUFFLE_LIMIT
         };
     } else if (isNoRemainingPiles) {
-        drawPile = ArrayHelper.shuffle([...discardPile, ...Deck.newDeck()]);
+        // do we include the current hand's tiles in reshuffling?
+        drawPile = ArrayHelper.shuffle(
+            Settings.DISCARD_LAST_BEFORE_RESHUFFLE
+                ? [...discardPile, ...state.currentHand.tiles]
+                : [...discardPile]
+        );
         discardPile = [];
         reshuffleCount++;
     }

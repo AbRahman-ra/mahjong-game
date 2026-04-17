@@ -1,4 +1,6 @@
 import { BetOutcome } from "./Bet";
+import { TileLabel } from "./TileLabel";
+import { TileValue } from "./TileValue";
 
 export enum NonNumberTileGroup {
     DRAGON = "DRAGON",
@@ -11,10 +13,10 @@ export enum NumberTileGroup {
 
 export interface TileGroup {
     type: NumberTileGroup | NonNumberTileGroup;
-    possibleValues?: number[];
+    possibleValues?: TileValue[];
     baseValue?: number;
     accent: string;
-    dynamicScaler: Readonly<Record<BetOutcome, number>>;
+    label: TileLabel;
+    dynamicScaler?: Readonly<Record<BetOutcome, number>>;
     copies: number;
 }
-

@@ -1,3 +1,4 @@
+// SIMPLE DI SCRIPT
 import { LocalStorageGameRepo } from "../adapters/local/LocalStorageGameRepo";
 import { LocalStorageLeaderboardRepo } from "../adapters/local/LocalStorageLeaderboardRepo";
 import { LocalStorageSessionRepo } from "../adapters/local/LocalStorageSessionRepo";

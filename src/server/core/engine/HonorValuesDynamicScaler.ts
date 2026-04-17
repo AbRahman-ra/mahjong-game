@@ -12,7 +12,7 @@ export const scaleHonorValues = (
     const updated = { ...honorValues };
 
     hand.tiles.filter(isNonNumberTile).forEach((tile) => {
-        const delta = Settings.TILE_GROUPS[tile.type].dynamicScaler[outcome];
+        const delta = Settings.TILE_GROUPS[tile.type].dynamicScaler?.[outcome] ?? 0;
         updated[tile.type] = honorValues[tile.type] + delta;
     });
 

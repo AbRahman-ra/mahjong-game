@@ -1,11 +1,13 @@
 import { NonNumberTileGroup, NumberTileGroup, TileGroup } from "./TileGroup";
+import { TileLabel } from "./TileLabel";
+import { TileValue } from "./TileValue";
 
 export type Tile = NumberTile | NonNumberTile;
 
 export interface NumberTile {
     readonly id: string;
     readonly type: NumberTileGroup;
-    readonly value: number;
+    readonly value: TileValue;
 }
 
 /**
@@ -14,6 +16,7 @@ export interface NumberTile {
 export interface NonNumberTile {
     readonly id: string;
     readonly type: NonNumberTileGroup;
+    readonly label: TileLabel
 }
 
 export const isNumberTile = (t: Tile): t is NumberTile =>
@@ -25,4 +28,4 @@ export const isNonNumberTile = (t: Tile): t is NonNumberTile =>
 export const value = (
     tile: Tile,
     honorValues: Readonly<Record<NonNumberTileGroup, number>>,
-): number => (isNonNumberTile(tile) ? honorValues[tile.type] : tile.value);
+): number => (isNonNumberTile(tile) ? honorValues[tile.type] : tile.value.value);
