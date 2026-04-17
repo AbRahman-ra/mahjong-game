@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia';
 import { useGameStore } from '@/client/store/gameStore';
 import ScoreDisplay from '@/client/components/ScoreDisplay.vue';
 import PileCounters from './PileCounters.vue';
-import ExitButton from './ExitButton.vue';
+import ExitButton from '../../../components/ExitButton.vue';
 
 const emit = defineEmits<{
     exit: [];
@@ -17,7 +17,7 @@ const { score } = storeToRefs(gameStore);
     <header class="topbar panel">
         <ScoreDisplay :score="score" />
         <PileCounters />
-        <ExitButton @exit="emit('exit')" />
+        <ExitButton class="exit-btn" @exit="emit('exit')" />
 
     </header>
 </template>
@@ -31,11 +31,17 @@ const { score } = storeToRefs(gameStore);
     gap: 1rem;
 }
 
+.exit-btn {
+    justify-self: flex-end;
+}
+
 /* RESPONSIVENESS */
 @media (max-width: 720px) {
     .topbar {
-        flex-direction: column;
-        align-items: flex-start;
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        align-items: center;
+        gap: 0.75rem;
     }
 }
 </style>

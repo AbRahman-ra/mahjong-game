@@ -95,7 +95,7 @@ const roundCount = computed(() => history.value.length);
     flex-direction: column;
     gap: 1rem;
     min-height: 100%;
-    max-height: calc(100vh - 12rem);
+    max-height: calc(40dvh);
     position: sticky;
     top: 2rem;
     overflow: hidden;

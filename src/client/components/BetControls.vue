@@ -15,7 +15,7 @@ const emit = defineEmits<{
 
         <header class="betting-controls__label">
             <p class="eyebrow">Make Your Call</p>
-            <h3>Will the next hand be higher or lower?</h3>
+            <h3>What's your next bet?</h3>
         </header>
 
         <section class="betting-controls__actions">
@@ -57,7 +57,6 @@ const emit = defineEmits<{
 
 .betting-controls__actions {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.8rem;
 }
 

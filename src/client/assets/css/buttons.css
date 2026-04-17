@@ -39,3 +39,11 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: none;
 }
+
+.icon-btn {
+    all: unset;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}

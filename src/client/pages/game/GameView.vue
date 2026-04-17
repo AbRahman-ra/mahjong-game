@@ -28,11 +28,15 @@ async function confirmExit() {
         <GameTopbar @exit="showExitConfirm = true" />
 
         <div class="game-view__body">
-            <GameTable />
-            <GameData />
-            <ResolutionBanner />
-            <HandHistory />
-            <div class="game-view__main">
+
+            <div class="game-view__left">
+                <GameTable />
+                <GameData />
+            </div>
+
+            <div class="game-view__right">
+                <ResolutionBanner />
+                <HandHistory />
             </div>
         </div>
 
@@ -51,16 +55,25 @@ async function confirmExit() {
 
 .game-view__body {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(22rem, 0.8fr);
+    grid-template-columns: minmax(0, 1.3fr) minmax(22rem, 0.7fr);
     gap: 1.35rem;
     align-items: start;
 }
 
-.game-view__main {
+.game-view__left {
     display: grid;
     gap: 1rem;
 }
 
+.game-view__right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: sticky;
+    top: 2rem;
+}
+
+/* MOBILE DESIGN */
 @media (max-width: 1080px) {
     .game-view__body {
         grid-template-columns: 1fr;

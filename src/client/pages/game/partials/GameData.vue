@@ -15,16 +15,22 @@ async function onBet(direction: BetDirection) {
 <template>
     <div class="game-data">
         <CurrentHand />
+        <BetControls :disabled="!isBetting" @bet="onBet" />
     </div>
 
-    <section class="current-hand__controls">
-        <BetControls :disabled="!isBetting" @bet="onBet" />
-    </section>
+
 </template>
 
 <style scoped>
 .game-data {
     display: grid;
-    gap: 1.5rem;
+    grid-template-columns: 1fr 30%;
+    gap: 1rem;
+}
+
+@media (max-width: 1080px) {
+    .game-data {
+        grid-template-columns: 1fr;
+    }
 }
 </style>

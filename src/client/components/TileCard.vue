@@ -40,8 +40,8 @@ const isImage = computed(() => label.value.format === TileLabelFormat.IMAGE_URL)
         <!-- Top row: group label + current value -->
         <header class="tile-card__top">
             <section class="tile-card__group">
-                <img v-if="group.label.format === TileLabelFormat.IMAGE_URL" :src="group.label.value"
-                    class="tile-card__group-img" />
+                <img :alt="`${group.type} tile group`" v-if="group.label.format === TileLabelFormat.IMAGE_URL"
+                    :src="group.label.value" class="tile-card__group-img" />
                 <strong v-else>{{ group.label.value }}</strong>
             </section>
             <span class="tile-card__value">{{ displayValue }}</span>
@@ -49,7 +49,7 @@ const isImage = computed(() => label.value.format === TileLabelFormat.IMAGE_URL)
 
         <!-- Face: tile's own label -->
         <section class="tile-card__face">
-            <img v-if="isImage" :src="label.value" class="tile-card__face-img" />
+            <img :alt="`${group.type} tile`" v-if="isImage" :src="label.value" class="tile-card__face-img" />
             <strong v-else class="tile-card__rank">{{ label.value }}</strong>
         </section>
 
@@ -62,6 +62,7 @@ const isImage = computed(() => label.value.format === TileLabelFormat.IMAGE_URL)
 
 <style scoped>
 .tile-card {
+    container-type: inline-size;
     position: relative;
     display: grid;
     grid-template-rows: auto 1fr auto;
@@ -108,10 +109,17 @@ const isImage = computed(() => label.value.format === TileLabelFormat.IMAGE_URL)
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: color-mix(in srgb, var(--tile-accent) 70%, #333);
+}
+
+.tile-card__top {
+    font-size: clamp(0.55rem, 25cqi, 0.8rem);
+}
+
+.tile-card__footer {
+    font-size: clamp(0.55rem, 10cqi, 0.8rem);
 }
 
 .tile-card__value {
@@ -119,9 +127,10 @@ const isImage = computed(() => label.value.format === TileLabelFormat.IMAGE_URL)
     min-width: 1.9rem;
     justify-content: center;
     padding: 0.25rem 0.45rem;
-    border-radius: 999px;
+    border-radius: 100%;
     background: color-mix(in srgb, var(--tile-accent) 14%, white);
     color: color-mix(in srgb, var(--tile-accent) 70%, var(--ink));
+    font-size: clamp(0.55rem, 3cqi, 0.8rem);
     font-weight: 700;
 }
 
@@ -131,7 +140,7 @@ const isImage = computed(() => label.value.format === TileLabelFormat.IMAGE_URL)
     display: grid;
     place-items: center;
     min-height: unset;
-    border-radius: 0.95rem;
+    border-radius: 15%;
     background:
         radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--tile-accent) 22%, white), transparent 45%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(246, 240, 231, 0.92));
@@ -140,13 +149,13 @@ const isImage = computed(() => label.value.format === TileLabelFormat.IMAGE_URL)
 
 .tile-card__rank {
     font-family: Georgia, 'Times New Roman', serif;
-    font-size: 3rem;
+    font-size: clamp(1rem, 50cqi, 3rem);
     line-height: 1;
     color: color-mix(in srgb, var(--tile-accent) 68%, #111);
 }
 
 .tile-card--compact .tile-card__rank {
-    font-size: 1.7rem;
+    font-size: clamp(0.8rem, 10cqi, 1.7rem);
 }
 
 .tile-card__face-img,

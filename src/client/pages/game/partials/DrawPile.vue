@@ -87,8 +87,7 @@ const fillPercent = computed(() =>
     border-color: rgba(98, 193, 177, 0.2);
 }
 
-/* ── Info ────────────────────────────────────────────────────────────────── */
-
+/* PILE INFO */
 .draw-pile__info {
     display: flex;
     flex-direction: column;
@@ -101,13 +100,12 @@ const fillPercent = computed(() =>
     line-height: 1;
 }
 
-/* ── Fill bar ────────────────────────────────────────────────────────────── */
-
+/* PILE INFO BAR */
 .draw-pile__fill {
-    width: 4px;
+    width: 1rem;
     height: 3rem;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.1);
     overflow: hidden;
     display: flex;
     align-items: flex-end;
@@ -115,7 +113,7 @@ const fillPercent = computed(() =>
 
 .draw-pile__fill-bar {
     width: 100%;
-    border-radius: 999px;
+    border-radius: 1rem;
     background: linear-gradient(180deg, var(--teal), rgba(98, 193, 177, 0.4));
     transition: height 400ms ease;
     min-height: 4px;
