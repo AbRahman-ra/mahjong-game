@@ -16,12 +16,6 @@ const roundCount = computed(() => history.value.length);
 </script>
 
 <template>
-    <!-- Mobile toggle button -->
-    <button class="history-toggle button button-ghost" @click="isOpen = !isOpen" aria-controls="hand-history">
-        <span>History</span>
-        <strong>{{ roundCount }}</strong>
-    </button>
-
     <!-- Panel -->
     <aside id="hand-history" class="hand-history panel" :class="{ 'hand-history--open': isOpen }">
         <header class="hand-history__header">
@@ -29,10 +23,6 @@ const roundCount = computed(() => history.value.length);
                 <p class="eyebrow">History</p>
                 <span class="hand-history__count">{{ roundCount }} rounds</span>
             </div>
-            <!-- close button — mobile only -->
-            <button class="button button-ghost hand-history__close" @click="isOpen = false">
-                Close
-            </button>
         </header>
 
         <!-- Empty state -->
@@ -69,33 +59,13 @@ const roundCount = computed(() => history.value.length);
 </template>
 
 <style scoped>
-/* MOBILE TOGGLE */
-.history-toggle {
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0.75rem 1rem;
-}
-
-.history-toggle strong {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.8rem;
-    min-height: 1.8rem;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.1);
-    font-size: 0.85rem;
-}
-
 /* PANEL */
 .hand-history {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     min-height: 100%;
-    max-height: calc(40dvh);
+    max-height: calc(50dvh);
     position: sticky;
     top: 2rem;
     overflow: hidden;
@@ -111,10 +81,6 @@ const roundCount = computed(() => history.value.length);
 .hand-history__count {
     color: var(--ink-soft);
     font-size: 0.88rem;
-}
-
-.hand-history__close {
-    display: none;
 }
 
 .hand-history__empty {
@@ -201,34 +167,8 @@ const roundCount = computed(() => history.value.length);
 /* ── Mobile bottom sheet ─────────────────────────────────────────────────── */
 
 @media (max-width: 1080px) {
-    .history-toggle {
-        display: flex;
-    }
-
-    .hand-history {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        max-height: 70vh;
-        border-radius: 1.6rem 1.6rem 0 0;
-        transform: translateY(100%);
-        transition: transform 320ms ease;
-        z-index: 100;
-    }
-
-    .hand-history--open {
-        transform: translateY(0);
-    }
-
-    .hand-history__close {
-        display: block;
-    }
-}
-
-@media (max-width: 640px) {
     .history-round__tiles {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
     }
 }
 </style>

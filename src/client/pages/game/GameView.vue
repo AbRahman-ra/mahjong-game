@@ -5,15 +5,21 @@ import { useGameStore } from '@/client/store/gameStore';
 
 import GameTopbar from '@/client/pages/game/partials/Topbar.vue';
 import GameTable from '@/client/pages/game/partials/GameTable.vue';
-import GameData from '@/client/pages/game/partials/GameData.vue';
 import HandHistory from '@/client/pages/game/partials/HandHistory.vue';
 import ExitConfirmDialog from '@/client/pages/game/partials/ExitConfirmDialog.vue';
 import ResolutionBanner from './partials/ResolutionBanner.vue';
+import CurrentHand from './partials/CurrentHand.vue';
+import BetControls from '@/client/components/BetControls.vue';
+import { storeToRefs } from 'pinia';
+import { BetDirection } from '@/server/core/domain/model/Bet';
 
 const router = useRouter();
 const gameStore = useGameStore();
 
 const showExitConfirm = ref(false);
+const { isBetting } = storeToRefs(gameStore);
+
+async function onBet(direction: BetDirection) { await gameStore.placeBet(direction); }
 
 async function confirmExit() {
     showExitConfirm.value = false;
@@ -31,11 +37,20 @@ async function confirmExit() {
 
             <div class="game-view__left">
                 <GameTable />
-                <GameData />
+                <div class="game-data">
+                    <CurrentHand />
+                    <BetControls class="game-data__desktop" :disabled="!isBetting" @bet="onBet" />
+                </div>
+            </div>
+
+            <!-- Shown on mobile view -->
+            <div class="game-data__mobile">
+                <BetControls :disabled="!isBetting" @bet="onBet" />
+                <ResolutionBanner />
             </div>
 
             <div class="game-view__right">
-                <ResolutionBanner />
+                <ResolutionBanner class="game-data__desktop" />
                 <HandHistory />
             </div>
         </div>
@@ -65,6 +80,16 @@ async function confirmExit() {
     gap: 1rem;
 }
 
+.game-data {
+    display: grid;
+    grid-template-columns: 1fr 30%;
+    gap: 1rem;
+}
+
+.game-data__mobile {
+    display: none;
+}
+
 .game-view__right {
     display: flex;
     flex-direction: column;
@@ -77,6 +102,20 @@ async function confirmExit() {
 @media (max-width: 1080px) {
     .game-view__body {
         grid-template-columns: 1fr;
+    }
+
+    .game-data {
+        grid-template-columns: 1fr;
+    }
+
+    .game-data__desktop {
+        display: none;
+    }
+
+    .game-data__mobile {
+        display: grid;
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 1rem;
     }
 }
 </style>

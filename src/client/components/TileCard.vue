@@ -154,10 +154,6 @@ const isImage = computed(() => label.value.format === TileLabelFormat.IMAGE_URL)
     color: color-mix(in srgb, var(--tile-accent) 68%, #111);
 }
 
-.tile-card--compact .tile-card__rank {
-    font-size: clamp(0.8rem, 10cqi, 1.7rem);
-}
-
 .tile-card__face-img,
 .tile-card__group-img {
     width: 100%;

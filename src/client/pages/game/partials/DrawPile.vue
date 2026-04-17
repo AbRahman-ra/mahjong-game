@@ -45,7 +45,7 @@ const fillPercent = computed(() =>
     height: 100%;
 }
 
-/* ── Stacked tiles ───────────────────────────────────────────────────────── */
+/* Stacked tiles */
 
 .draw-pile__stack {
     position: relative;
@@ -116,6 +116,5 @@ const fillPercent = computed(() =>
     border-radius: 1rem;
     background: linear-gradient(180deg, var(--teal), rgba(98, 193, 177, 0.4));
     transition: height 400ms ease;
-    min-height: 4px;
 }
 </style>
