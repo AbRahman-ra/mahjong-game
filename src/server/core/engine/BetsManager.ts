@@ -33,17 +33,22 @@ export const placeBet = (state: GS.GameState, bet: Bet.BetDirection): GS.GameSta
             Settings.DISCARD_LAST_BEFORE_RESHUFFLE
                 ? [...discardPile, ...state.currentHand.tiles]
                 : [...discardPile]
-        );
+        ).map(t => ({...t, id: crypto.randomUUID()}));
         discardPile = [];
         reshuffleCount++;
     }
 
     const { hand, remaining } = Deck.draw(drawPile);
     const nextHand = Hand.newHand(hand, state.honorValues);
+    const phase = reshuffleCount >= Settings.GAME_OVER_CONDITIONS.RESHUFFLES_MAX 
+        ? GS.GamePhase.GAME_OVER 
+        : GS.GamePhase.REVEALING;
+    const reason = reshuffleCount >= Settings.GAME_OVER_CONDITIONS.RESHUFFLES_MAX ? GS.GameOverReason.RESHUFFLE_LIMIT : undefined;
 
     return {
         ...state,
-        phase: GS.GamePhase.REVEALING,
+        phase,
+        gameOverReason: reason,
         drawPile: remaining,
         discardPile,
         reshuffleCount,
