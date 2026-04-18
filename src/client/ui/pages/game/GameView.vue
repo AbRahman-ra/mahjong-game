@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGameStore } from '@/client/store/gameStore';
 
@@ -12,6 +12,7 @@ import CurrentHand from './partials/CurrentHand.vue';
 import BetControls from '@/client/ui/components/BetControls.vue';
 import { storeToRefs } from 'pinia';
 import { BetDirection } from '@/server/core/domain/model/Bet';
+import { useThrowAnimation } from '@/client/composables/useThrowAnimation';
 
 const router = useRouter();
 const gameStore = useGameStore();
@@ -19,7 +20,19 @@ const gameStore = useGameStore();
 const showExitConfirm = ref(false);
 const { isBetting } = storeToRefs(gameStore);
 
-async function onBet(direction: BetDirection) { await gameStore.placeBet(direction); }
+// betting handling
+const gameTableRef = ref<InstanceType<typeof GameTable> | null>(null);
+const currentHandRef = ref<InstanceType<typeof CurrentHand> | null>(null);
+const pileAreaRef = computed(() => gameTableRef.value?.discardedPilesArea ?? null);
+const { throwTiles } = useThrowAnimation(pileAreaRef, "[data-tile-id]");
+
+async function onBet(direction: BetDirection) {
+    const container = currentHandRef.value?.currentHandTilesWrapper;
+    if (container) await throwTiles(container);
+
+    await new Promise(r => setTimeout(r, 100));
+    await gameStore.placeBet(direction);
+}
 
 async function confirmExit() {
     showExitConfirm.value = false;
@@ -36,9 +49,9 @@ async function confirmExit() {
         <div class="game-view__body">
 
             <div class="game-view__left">
-                <GameTable />
+                <GameTable ref="gameTableRef" />
                 <div class="game-data">
-                    <CurrentHand />
+                    <CurrentHand ref="currentHandRef" />
                     <BetControls class="game-data__desktop" :disabled="!isBetting" @bet="onBet" />
                 </div>
             </div>

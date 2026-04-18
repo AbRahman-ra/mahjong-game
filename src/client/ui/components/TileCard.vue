@@ -78,7 +78,6 @@ const isImage = computed(() => label.value.format === TileLabelFormat.IMAGE_URL)
         inset 0 1px 0 rgba(255, 255, 255, 0.8),
         0 18px 30px rgba(14, 23, 38, 0.15);
     transform-origin: center bottom;
-    animation: tile-in 380ms ease both;
 }
 
 .tile-card::after {

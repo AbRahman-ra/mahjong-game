@@ -2,10 +2,13 @@
 import { storeToRefs } from 'pinia';
 import { useGameStore } from '@/client/store/gameStore';
 import TileCard from '@/client/ui/components/TileCard.vue';
+import { ref } from 'vue';
 
 const gameStore = useGameStore();
-const { currentHand, honorValues, isBetting } = storeToRefs(gameStore);
+const { currentHand, honorValues } = storeToRefs(gameStore);
 
+const currentHandTilesWrapper = ref<HTMLElement | null>(null);
+defineExpose({ currentHandTilesWrapper });
 </script>
 
 <template>
@@ -13,8 +16,10 @@ const { currentHand, honorValues, isBetting } = storeToRefs(gameStore);
         <!-- Tile strip -->
         <div class="current-hand__strip panel" v-if="currentHand && honorValues">
 
-            <div class="current-hand__tiles">
-                <TileCard v-for="tile in currentHand.tiles" :key="tile.id" :tile="tile" :honor-values="honorValues" />
+            <div class="current-hand__tiles" ref="currentHandTilesWrapper">
+                <div v-for="tile in currentHand.tiles" :key="tile.id" :data-tile-id="tile.id">
+                    <TileCard :tile="tile" :honor-values="honorValues" />
+                </div>
             </div>
 
             <!-- Total -->

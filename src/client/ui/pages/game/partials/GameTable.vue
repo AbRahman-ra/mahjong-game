@@ -1,12 +1,18 @@
-<!-- client/views/partials/GameTable.vue -->
 <script setup lang="ts">
 import DrawPile from '@/client/ui/pages/game/partials/DrawPile.vue';
 import DiscardPile from '@/client/ui/pages/game/partials/DiscardPile.vue';
+import { computed, ref } from 'vue';
+
+const discardPileRef = ref<InstanceType<typeof DiscardPile> | null>(null);
+defineExpose({
+    discardedPilesArea: computed(() => discardPileRef.value?.discardedPilesArea ?? null)
+});
+
 </script>
 
 <template>
     <section class="game-table panel">
-        <DiscardPile />
+        <DiscardPile ref="discardPileRef" />
         <DrawPile />
     </section>
 </template>

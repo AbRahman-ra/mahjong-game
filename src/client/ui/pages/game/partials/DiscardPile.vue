@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useGameStore } from '@/client/store/gameStore';
 import * as Settings from '@/server/core/domain/config/Settings';
@@ -11,6 +11,9 @@ const { discardPile } = storeToRefs(gameStore);
 const visibleTiles = computed(() =>
     discardPile.value.slice(-Settings.MAX_VISIBLE_DISCARD_PILES)
 );
+
+const discardedPilesArea = ref<HTMLElement | null>(null);
+defineExpose({ discardedPilesArea })
 
 // generate stable random-looking positions per tile index
 // using index as seed keeps positions consistent across re-renders
@@ -36,13 +39,10 @@ const getTileStyle = (index: number) => {
             <strong>{{ discardPile.length }}</strong>
         </header>
 
-        <div class="discard-pile__area">
+        <div class="discard-pile__area" ref="discardedPilesArea">
             <div v-if="!visibleTiles.length" class="discard-pile__empty">
                 <span>No discards yet</span>
             </div>
-
-            <div v-for="(tile, index) in visibleTiles" :key="tile.id" class="discard-pile__tile"
-                :style="getTileStyle(index)" />
         </div>
 
     </section>
