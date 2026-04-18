@@ -53,8 +53,8 @@ export const FIXED_TILE_COPIES = 4;
  * Gameover conditions
  */
 export const GAME_OVER_CONDITIONS = {
-    TILE_MIN: 4,
-    TILE_MAX: 6,
+    TILE_MIN: 0,
+    TILE_MAX: 10,
     RESHUFFLES_MAX: 3,
 };
 
