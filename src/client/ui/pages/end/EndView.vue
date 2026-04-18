@@ -1,4 +1,3 @@
-<!-- client/pages/EndView.vue -->
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
@@ -8,6 +7,7 @@ import { useLeaderboardStore } from '@/client/store/leaderboardStore';
 import { GameOverReason } from '@/server/core/domain/model/GameState';
 import ScoreDisplay from '@/client/ui/components/ScoreDisplay.vue';
 import Leaderboard from '@/client/ui/components/Leaderboard.vue';
+import * as Settings from '@/server/core/domain/config/Settings';
 
 const router = useRouter();
 const gameStore = useGameStore();
@@ -21,12 +21,10 @@ const hasSaved = ref(false);
 
 onMounted(() => leaderboardStore.fetchTop());
 
-// ── Game over reason message ──────────────────────────────────────────────
-
 const REASON_MESSAGES: Record<GameOverReason, string> = {
-    [GameOverReason.RESHUFFLE_LIMIT]: 'The deck burned out after 3 reshuffles.',
-    [GameOverReason.TILE_VALUE_MIN]: 'An honor tile collapsed to its minimum value.',
-    [GameOverReason.TILE_VALUE_MAX]: 'An honor tile surged to its maximum value.',
+    [GameOverReason.RESHUFFLE_LIMIT]: `The deck burned out after ${Settings.GAME_OVER_CONDITIONS.RESHUFFLES_MAX} reshuffles.`,
+    [GameOverReason.TILE_VALUE_MIN]: `A non-number tile collapsed to ${Settings.GAME_OVER_CONDITIONS.TILE_MIN} (minimum value).`,
+    [GameOverReason.TILE_VALUE_MAX]: `A non-number tile surged to ${Settings.GAME_OVER_CONDITIONS.TILE_MAX} (maximum value).`,
 };
 
 const reasonMessage = computed(() =>
@@ -35,9 +33,7 @@ const reasonMessage = computed(() =>
         : 'The run is over.'
 );
 
-// ── Actions ───────────────────────────────────────────────────────────────
-
-async function saveScore() {
+const saveScore = async () => {
     if (!playerName.value.trim() || hasSaved.value) return;
     await gameStore.exitGame(playerName.value.trim(), true);
     await leaderboardStore.fetchTop();
@@ -66,25 +62,26 @@ async function goHome() {
 
             <p class="end-view__reason">{{ reasonMessage }}</p>
 
-            <!-- Player name input -->
-            <label class="field">
-                <span>Player name</span>
-                <input v-model="playerName" type="text" maxlength="24" placeholder="Enter your name"
-                    :disabled="hasSaved" />
-            </label>
+            <form @submit.prevent="saveScore">
+                <div class="field">
+                    <label for="player-name">Player name</label>
+                    <input id="player-name" v-model="playerName" type="text" maxlength="24"
+                        placeholder="Enter your name" :disabled="hasSaved" />
+                </div>
 
-            <!-- Actions -->
-            <div class="end-view__actions">
-                <button class="button" :disabled="!playerName.trim() || hasSaved" @click="saveScore">
-                    {{ hasSaved ? 'Saved ✓' : 'Save to Leaderboard' }}
-                </button>
-                <button class="button button-secondary" @click="playAgain">
-                    Play Again
-                </button>
-                <button class="button button-ghost" @click="goHome">
-                    Go Home
-                </button>
-            </div>
+                <!-- Actions -->
+                <div class="end-view__actions">
+                    <button type="submit" class="button" :disabled="!playerName.trim() || hasSaved">
+                        {{ hasSaved ? 'Saved ✅' : 'Save to Leaderboard' }}
+                    </button>
+                    <a class="button button-secondary" @click="playAgain">
+                        Play Again
+                    </a>
+                    <a class="button button-ghost" @click="goHome">
+                        Go Home
+                    </a>
+                </div>
+            </form>
         </div>
 
         <!-- Leaderboard -->
@@ -112,14 +109,17 @@ async function goHome() {
     font-size: 1.05rem;
 }
 
-/* ── Name field ──────────────────────────────────────────────────────────── */
+form {
+    display: grid;
+    gap: 1rem;
+}
 
 .field {
     display: grid;
     gap: 0.45rem;
 }
 
-.field span {
+.field label {
     color: var(--ink-soft);
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -147,7 +147,7 @@ async function goHome() {
     cursor: not-allowed;
 }
 
-/* ── Actions ─────────────────────────────────────────────────────────────── */
+/* Actions */
 
 .end-view__actions {
     display: flex;
@@ -155,7 +155,7 @@ async function goHome() {
     gap: 0.8rem;
 }
 
-/* ── Responsive ──────────────────────────────────────────────────────────── */
+/* Responsive */
 
 @media (max-width: 960px) {
     .end-view {
