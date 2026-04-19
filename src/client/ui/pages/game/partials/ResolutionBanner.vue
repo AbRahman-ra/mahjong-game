@@ -3,11 +3,15 @@ import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useGameStore } from '@/client/store/gameStore';
 import { BetOutcome } from '@/server/core/domain/model/Bet';
+import { useAnimatedNumber } from '@/client/composables/useAnimatedNumber';
 
 const gameStore = useGameStore();
 const { history } = storeToRefs(gameStore);
 
+
 const lastRecord = computed(() => history.value.at(-1) ?? null);
+const animatedChange = useAnimatedNumber(() => lastRecord.value?.scoreChange ?? 0);
+
 const isWin = computed(() => lastRecord.value?.outcome === BetOutcome.WIN);
 const tone = computed(() => {
     if (!lastRecord.value) return 'idle';
@@ -33,7 +37,7 @@ const tone = computed(() => {
                 {{ isWin ? 'Round Won' : 'Round Lost' }}
             </p>
             <h3 class="resolution-banner__delta" :class="isWin ? 'positive' : 'negative'">
-                {{ isWin ? '+' : '' }}{{ lastRecord.scoreChange }}
+                {{ isWin ? '+' : '' }}{{ animatedChange }}
                 <span>points</span>
             </h3>
             <p class="resolution-banner__sub">

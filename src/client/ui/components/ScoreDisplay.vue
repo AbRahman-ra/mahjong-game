@@ -1,16 +1,20 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
+import { useAnimatedNumber } from '@/client/composables/useAnimatedNumber';
+
+const props = withDefaults(defineProps<{
     score: number;
     color?: string;
 }>(), {
     color: "var(--gold)"
 });
+
+const displayed = useAnimatedNumber(() => props.score);
 </script>
 
 <template>
     <div class="score-display" :style="{ '--score-color': color }">
         <p class="eyebrow">Score</p>
-        <strong class="score-display__value">{{ score }}</strong>
+        <strong class="score-display__value">{{ displayed }}</strong>
     </div>
 </template>
 

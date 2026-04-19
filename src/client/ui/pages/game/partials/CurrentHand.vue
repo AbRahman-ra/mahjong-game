@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia';
 import { useGameStore } from '@/client/store/gameStore';
 import TileCard from '@/client/ui/components/TileCard.vue';
 import { ref } from 'vue';
+import { useAnimatedNumber } from '@/client/composables/useAnimatedNumber';
 
 withDefaults(defineProps<{
     showNextHand?: boolean
@@ -12,6 +13,7 @@ withDefaults(defineProps<{
 
 const gameStore = useGameStore();
 const { currentHand, nextHand, honorValues } = storeToRefs(gameStore);
+const animatedTotal = useAnimatedNumber(() => currentHand.value?.total ?? 0);
 
 const currentHandTilesWrapper = ref<HTMLElement | null>(null);
 defineExpose({ currentHandTilesWrapper });
@@ -38,7 +40,7 @@ defineExpose({ currentHandTilesWrapper });
             <!-- Total -->
             <footer class="current-hand__total">
                 <span class="eyebrow">Hand Total</span>
-                <strong>{{ currentHand.total }}</strong>
+                <strong>{{ animatedTotal }}</strong>
             </footer>
 
         </div>

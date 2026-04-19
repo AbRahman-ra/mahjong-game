@@ -4,12 +4,16 @@ import { computed, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useGameStore } from '@/client/store/gameStore';
 import * as Settings from '@/server/core/domain/config/Settings';
+import { useAnimatedNumber } from '@/client/composables/useAnimatedNumber';
 
 const { drawPile, discardPile, reshuffleCount } = storeToRefs(useGameStore());
 
 const isReshuffleWarning = computed(() =>
     reshuffleCount.value >= Settings.GAME_OVER_CONDITIONS.RESHUFFLES_MAX - 1
 );
+
+const animatedDraw = useAnimatedNumber(() => drawPile.value.length);
+const animatedDiscard = useAnimatedNumber(() => discardPile.value.length);
 
 // mobile expansion
 const isExpanded = ref(false);
@@ -25,11 +29,11 @@ const isExpanded = ref(false);
             </div>
             <div class="counter-card">
                 <span>Draw</span>
-                <strong>{{ drawPile.length }}</strong>
+                <strong>{{ animatedDraw }}</strong>
             </div>
             <div class="counter-card">
                 <span>Discard</span>
-                <strong>{{ discardPile.length }}</strong>
+                <strong>{{ animatedDiscard }}</strong>
             </div>
 
         </div>
