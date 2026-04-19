@@ -24,7 +24,8 @@ const leaderboard = new GetLeaderboard(leaderboardRepo);
 
 export const gameService: IGameService = {
     initGame: initGame.initGame.bind(initGame),
-    placeBet: placeBet.placeBet.bind(placeBet),
+    drawNextHand: placeBet.drawNextHand.bind(placeBet),
+    resolveBet: placeBet.resolveBet.bind(placeBet),
     exitGame: exitGame.exitGame.bind(exitGame),
 };
 

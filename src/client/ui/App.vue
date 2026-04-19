@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch } from 'vue';
+import { nextTick, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGameStore } from '@/client/store/gameStore';
 import { GamePhase } from '@/server/core/domain/model/GameState';
@@ -9,8 +9,9 @@ const gameStore = useGameStore();
 
 watch(
     () => gameStore.phase,
-    (phase) => {
+    async (phase) => {
         if (phase === GamePhase.GAME_OVER) {
+            await nextTick();
             router.push({ name: 'end' });
         }
     }

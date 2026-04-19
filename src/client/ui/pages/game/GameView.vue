@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGameStore } from '@/client/store/gameStore';
 
@@ -13,6 +13,7 @@ import BetControls from '@/client/ui/components/BetControls.vue';
 import { storeToRefs } from 'pinia';
 import { BetDirection } from '@/server/core/domain/model/Bet';
 import { useThrowAnimation } from '@/client/composables/useThrowAnimation';
+import { useDrawPileAnimation } from '@/client/composables/useDrawPileAnimation';
 
 const router = useRouter();
 const gameStore = useGameStore();
@@ -26,12 +27,25 @@ const currentHandRef = ref<InstanceType<typeof CurrentHand> | null>(null);
 const pileAreaRef = computed(() => gameTableRef.value?.discardedPilesArea ?? null);
 const { throwTiles } = useThrowAnimation(pileAreaRef, "[data-tile-id]");
 
+const drawPileRef = computed(() => gameTableRef.value?.drawPileWrapper ?? null);
+const { dealTiles } = useDrawPileAnimation(drawPileRef);
+const showNextHand = ref(false);
+
 async function onBet(direction: BetDirection) {
     const container = currentHandRef.value?.currentHandTilesWrapper;
     if (container) await throwTiles(container);
 
-    await new Promise(r => setTimeout(r, 100));
-    await gameStore.placeBet(direction);
+    await gameStore.drawNextHand(direction);
+    if (gameStore.isGameOver) return;
+    await nextTick();
+
+    showNextHand.value = true;
+    await nextTick();
+
+    const currentContainer = currentHandRef.value?.currentHandTilesWrapper;
+    if (currentContainer) await dealTiles(currentContainer);
+    showNextHand.value = false;
+    await gameStore.resolveBet();
 }
 
 async function confirmExit() {
@@ -51,7 +65,7 @@ async function confirmExit() {
             <div class="game-view__left">
                 <GameTable ref="gameTableRef" />
                 <div class="game-data">
-                    <CurrentHand ref="currentHandRef" />
+                    <CurrentHand ref="currentHandRef" :show-next-hand="showNextHand" />
                     <BetControls class="game-data__desktop" :disabled="!isBetting" @bet="onBet" />
                 </div>
             </div>

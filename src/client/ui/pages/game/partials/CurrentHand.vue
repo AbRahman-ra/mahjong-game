@@ -4,8 +4,14 @@ import { useGameStore } from '@/client/store/gameStore';
 import TileCard from '@/client/ui/components/TileCard.vue';
 import { ref } from 'vue';
 
+withDefaults(defineProps<{
+    showNextHand?: boolean
+}>(), {
+    showNextHand: false
+})
+
 const gameStore = useGameStore();
-const { currentHand, honorValues } = storeToRefs(gameStore);
+const { currentHand, nextHand, honorValues } = storeToRefs(gameStore);
 
 const currentHandTilesWrapper = ref<HTMLElement | null>(null);
 defineExpose({ currentHandTilesWrapper });
@@ -17,9 +23,16 @@ defineExpose({ currentHandTilesWrapper });
         <div class="current-hand__strip panel" v-if="currentHand && honorValues">
 
             <div class="current-hand__tiles" ref="currentHandTilesWrapper">
-                <div v-for="tile in currentHand.tiles" :key="tile.id" :data-tile-id="tile.id">
-                    <TileCard :tile="tile" :honor-values="honorValues" />
-                </div>
+                <template v-if="!nextHand || !showNextHand">
+                    <div v-for="tile in currentHand.tiles" :key="tile.id" :data-tile-id="tile.id">
+                        <TileCard :tile="tile" :honor-values="honorValues" />
+                    </div>
+                </template>
+                <template v-else>
+                    <div v-for="tile in nextHand?.tiles" :key="`${tile.id}`" :data-tile-id="tile.id">
+                        <TileCard :tile="tile" :honor-values="honorValues" />
+                    </div>
+                </template>
             </div>
 
             <!-- Total -->

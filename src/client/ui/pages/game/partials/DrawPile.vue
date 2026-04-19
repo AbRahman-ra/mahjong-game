@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useGameStore } from '@/client/store/gameStore';
 import * as Settings from '@/server/core/domain/config/Settings';
@@ -14,13 +14,16 @@ const visibleTiles = computed(() =>
 const fillPercent = computed(() =>
     Math.round((drawPile.value.length / Settings.DECK_SIZE) * 100)
 );
+
+const stackRef = ref<HTMLElement | null>(null);
+defineExpose({ stackRef });
 </script>
 
 <template>
     <aside class="draw-pile">
 
         <!-- Stacked face-down tiles -->
-        <div class="draw-pile__stack">
+        <div class="draw-pile__stack" ref="stackRef">
             <div v-for="i in visibleTiles" :key="i" class="draw-pile__tile" :style="{ '--offset': i }" />
         </div>
 

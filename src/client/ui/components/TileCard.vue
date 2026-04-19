@@ -77,7 +77,6 @@ const isImage = computed(() => label.value.format === TileLabelFormat.IMAGE_URL)
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.8),
         0 18px 30px rgba(14, 23, 38, 0.15);
-    transform-origin: center bottom;
 }
 
 .tile-card::after {
@@ -158,19 +157,5 @@ const isImage = computed(() => label.value.format === TileLabelFormat.IMAGE_URL)
     width: 100%;
     height: 100%;
     object-fit: contain;
-}
-
-/* ANIMATIONS */
-
-@keyframes tile-in {
-    from {
-        opacity: 0;
-        transform: translateY(20px) rotateX(28deg);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) rotateX(0deg);
-    }
 }
 </style>

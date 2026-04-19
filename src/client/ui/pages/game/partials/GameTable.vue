@@ -4,8 +4,11 @@ import DiscardPile from '@/client/ui/pages/game/partials/DiscardPile.vue';
 import { computed, ref } from 'vue';
 
 const discardPileRef = ref<InstanceType<typeof DiscardPile> | null>(null);
+const drawPileRef = ref<InstanceType<typeof DrawPile> | null>(null);
+
 defineExpose({
-    discardedPilesArea: computed(() => discardPileRef.value?.discardedPilesArea ?? null)
+    discardedPilesArea: computed(() => discardPileRef.value?.discardedPilesArea ?? null),
+    drawPileWrapper: computed(() => drawPileRef.value?.stackRef ?? null),
 });
 
 </script>
@@ -13,7 +16,7 @@ defineExpose({
 <template>
     <section class="game-table panel">
         <DiscardPile ref="discardPileRef" />
-        <DrawPile />
+        <DrawPile ref="drawPileRef" />
     </section>
 </template>
 

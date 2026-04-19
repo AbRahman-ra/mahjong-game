@@ -6,7 +6,8 @@ export interface IInitGameService {
 }
 
 export interface IPlaceBetService {
-    placeBet(bet: BetDirection): Promise<GameState>;
+    drawNextHand(bet: BetDirection): Promise<GameState>;
+    resolveBet(): Promise<GameState>;
 }
 
 export interface IExitGameService {

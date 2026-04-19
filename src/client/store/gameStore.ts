@@ -9,7 +9,6 @@ import type { GameState } from "@/server/core/domain/model/GameState";
 import type { GameEvent } from "@/server/core/domain/events/Event";
 
 export const useGameStore = defineStore("game", () => {
-
     // ================================= STATE =================================
     const gameState = ref<GameState | null>(null);
     const isLoading = ref(false);
@@ -44,21 +43,36 @@ export const useGameStore = defineStore("game", () => {
         }
     }
 
-    async function placeBet(bet: BetDirection): Promise<void> {
-        if (!isBetting.value) return;
+    async function drawNextHand(bet: BetDirection): Promise<void> {
         isLoading.value = true;
         error.value = null;
         try {
-            gameState.value = await gameService.placeBet(bet);
+            gameState.value = await gameService.drawNextHand(bet);
         } catch (e) {
-            error.value = "Failed to place bet";
+            error.value = "Failed to draw next hand";
             console.error(e);
         } finally {
             isLoading.value = false;
         }
     }
 
-    async function exitGame(playerName: string, saveScore: boolean): Promise<void> {
+    async function resolveBet(): Promise<void> {
+        isLoading.value = true;
+        error.value = null;
+        try {
+            gameState.value = await gameService.resolveBet();
+        } catch (e) {
+            error.value = "Failed to resolve bet";
+            console.error(e);
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+    async function exitGame(
+        playerName: string,
+        saveScore: boolean,
+    ): Promise<void> {
         isLoading.value = true;
         error.value = null;
         try {
@@ -114,7 +128,8 @@ export const useGameStore = defineStore("game", () => {
         isRevealing,
         // actions
         initGame,
-        placeBet,
+        drawNextHand,
+        resolveBet,
         exitGame,
     };
 });

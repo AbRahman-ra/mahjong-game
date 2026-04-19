@@ -1,5 +1,5 @@
 import * as BET from "../domain/model/Bet";
-import { GameState } from "../domain/model/GameState";
+import { GamePhase, GameState } from "../domain/model/GameState";
 import { IPlaceBetService } from "../ports/in/IGameService";
 import { IGameRepo } from "../ports/out/IGameRepo";
 import { IGameEventBus } from "../ports/out/IGameEventBus";
@@ -12,63 +12,67 @@ export class PlaceBet implements IPlaceBetService {
         private readonly eventBus: IGameEventBus,
     ) {}
 
-    async placeBet(bet: BET.BetDirection): Promise<GameState> {
+    async drawNextHand(bet: BET.BetDirection): Promise<GameState> {
         const state = await this.repo.load();
         if (!state) throw new Error("No active game session");
 
-        // change state
         const afterBetState = ENGINE.placeBet(state, bet);
 
-        // if game over
+        // game over on reshuffle limit
         if (ENGINE.isGameOver(afterBetState)) {
-            let reason = afterBetState.gameOverReason!;
-            let lastScore = afterBetState.score;
-
             await this.repo.save(afterBetState);
-            let event: GEVENT.GameEvent<GEVENT.GameOverContext> = {
+            this.eventBus.publish({
                 type: GEVENT.GameEventType.GAME_OVER,
-                data: { reason, lastScore },
-            };
-
-            this.eventBus.publish(event);
+                data: {
+                    reason: afterBetState.gameOverReason!,
+                    lastScore: afterBetState.score,
+                },
+            });
             return afterBetState;
         }
 
-        // if reshuffled
-        const isReshuffled = afterBetState.reshuffleCount > state.reshuffleCount;
-
-        if (isReshuffled) {
-            let remaining = afterBetState.drawPile.length;
-            let reshuffles = afterBetState.reshuffleCount;
-
-            let event: GEVENT.GameEvent<GEVENT.PileOutageContext> = {
+        // notify reshuffle
+        if (afterBetState.reshuffleCount > state.reshuffleCount) {
+            this.eventBus.publish({
                 type: GEVENT.GameEventType.PILE_OUTAGE,
-                data: { remaining, reshuffles },
-            };
-            this.eventBus.publish(event);
+                data: {
+                    remaining: afterBetState.drawPile.length,
+                    reshuffles: afterBetState.reshuffleCount,
+                },
+            });
         }
 
-        // resolve new state
-        const afterResolveState = ENGINE.resolveBet(afterBetState);
+        await this.repo.save(afterBetState);
+        return afterBetState;
+    }
+
+    async resolveBet(): Promise<GameState> {
+        const state = await this.repo.load();
+        if (!state) throw new Error("No active game session");
+
+        const afterResolveState = ENGINE.resolveBet(state);
         await this.repo.save(afterResolveState);
 
-        // publish resolved bet
-        // const lastRecord = afterResolveState.history[afterResolveState.history.length - 1];
         const lastRecord = afterResolveState.history.at(-1)!;
-        const type = lastRecord.outcome === BET.BetOutcome.WIN ? GEVENT.GameEventType.SUCCESSFUL_BET : GEVENT.GameEventType.UNSUCCESSFUL_BET;
-        let { hand, scoreChange } = lastRecord;
-        let resolveEvent: GEVENT.GameEvent<GEVENT.BetResolvedContext> = {type, data: { hand, scoreChange }}
-        this.eventBus.publish(resolveEvent);
+        this.eventBus.publish({
+            type:
+                lastRecord.outcome === BET.BetOutcome.WIN
+                    ? GEVENT.GameEventType.SUCCESSFUL_BET
+                    : GEVENT.GameEventType.UNSUCCESSFUL_BET,
+            data: {
+                hand: lastRecord.hand,
+                scoreChange: lastRecord.scoreChange,
+            },
+        });
 
         if (ENGINE.isGameOver(afterResolveState)) {
-            const reason = afterResolveState.gameOverReason!;
-            const lastScore = afterResolveState.score;
-            let event: GEVENT.GameEvent<GEVENT.GameOverContext> = {
+            this.eventBus.publish({
                 type: GEVENT.GameEventType.GAME_OVER,
-                data: { reason, lastScore }
-            };
-
-            this.eventBus.publish(event);
+                data: {
+                    reason: afterResolveState.gameOverReason!,
+                    lastScore: afterResolveState.score,
+                },
+            });
         }
 
         return afterResolveState;
