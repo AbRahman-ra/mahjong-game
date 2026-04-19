@@ -10,5 +10,6 @@
         "jsx": "preserve",
         "types": ["bun"],
         "paths": { "@/*": ["./src/*"] }
-    }
+    },
+    "exclude": ["draft/**/*"]
 }
