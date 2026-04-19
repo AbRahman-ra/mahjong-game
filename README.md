@@ -5,7 +5,7 @@ A technical assessment for [Penny Software](https://penny.co)
 - [Problem Statement](./docs/TASK.md)
 - [Detailed Iterative Thought Process](./docs/THOUGHTS.md)
 - [Full Project Architecture](./docs/ARCHITECTURE.md)
-- [Video]()
+- [Project Demonstration](https://youtu.be/WkhgV2zdgeY)
 
 ## About Project
 
@@ -52,7 +52,9 @@ bun run dev
 
 ## Development
 
-- Models used: Claude Sonnet 4.6
+- Models used:
+    - Claude Sonnet 4.6: Code Snippets
+    - Codex (GPT-5.4): Design System (UI, Colors, Layouts)
 
 ### AI Contributions
 
