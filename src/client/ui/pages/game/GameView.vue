@@ -25,7 +25,8 @@ const { isBetting } = storeToRefs(gameStore);
 const gameTableRef = ref<InstanceType<typeof GameTable> | null>(null);
 const currentHandRef = ref<InstanceType<typeof CurrentHand> | null>(null);
 const pileAreaRef = computed(() => gameTableRef.value?.discardedPilesArea ?? null);
-const { throwTiles } = useThrowAnimation(pileAreaRef, "[data-tile-id]");
+const pileRectRef = computed(() => gameTableRef.value?.discardedPilesRect ?? null);
+const { throwTiles } = useThrowAnimation(pileAreaRef, pileRectRef, "[data-tile-id]");
 
 const drawPileRef = computed(() => gameTableRef.value?.drawPileWrapper ?? null);
 const { dealTiles } = useDrawPileAnimation(drawPileRef);

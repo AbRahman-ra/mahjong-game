@@ -13,7 +13,9 @@ const visibleTiles = computed(() =>
 );
 
 const discardedPilesArea = ref<HTMLElement | null>(null);
-defineExpose({ discardedPilesArea })
+const discardedPilesRect = ref<HTMLElement | null>(null);
+
+defineExpose({ discardedPilesArea, discardedPilesRect })
 
 // generate stable random-looking positions per tile index
 // using index as seed keeps positions consistent across re-renders
@@ -39,12 +41,12 @@ const getTileStyle = (index: number) => {
             <strong>{{ discardPile.length }}</strong>
         </header>
 
-        <div class="discard-pile__area" ref="discardedPilesArea">
+        <div class="discard-pile__area" ref="discardedPilesRect">
             <div v-if="!visibleTiles.length" class="discard-pile__empty">
                 <span>No discards yet</span>
             </div>
+            <div class="discard-pile__clones" ref="discardedPilesArea"></div>
         </div>
-
     </section>
 </template>
 
@@ -75,6 +77,12 @@ const getTileStyle = (index: number) => {
     background: rgba(8, 19, 31, 0.32);
     border: 1px solid rgba(255, 255, 255, 0.06);
     overflow: hidden;
+}
+
+.discard-pile__clones {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
 }
 
 .discard-pile__empty {

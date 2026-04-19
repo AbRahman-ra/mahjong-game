@@ -8,6 +8,7 @@ const drawPileRef = ref<InstanceType<typeof DrawPile> | null>(null);
 
 defineExpose({
     discardedPilesArea: computed(() => discardPileRef.value?.discardedPilesArea ?? null),
+    discardedPilesRect: computed(() => discardPileRef.value?.discardedPilesRect ?? null),
     drawPileWrapper: computed(() => drawPileRef.value?.stackRef ?? null),
 });
 

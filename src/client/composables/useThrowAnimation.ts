@@ -3,17 +3,18 @@ import { Ref } from "vue";
 
 export const useThrowAnimation = (
     pileAreaRef: Ref<HTMLElement | null>,
+    pileRectRef: Ref<HTMLElement | null>,
     pileAreaQuerySelector: string,
 ) => {
     const THROWN_CARD_SCALE = 0.75;
     // HELPERS
     const throwTiles = async (tilesContainer: HTMLElement): Promise<void> => {
         const pileArea = pileAreaRef.value;
+        const pileRect = pileRectRef.value?.getBoundingClientRect();
         const tileEls = tilesContainer.querySelectorAll(pileAreaQuerySelector);
 
-        if (!pileArea || !tileEls.length) return;
+        if (!pileArea || !pileRect || !tileEls.length) return;
 
-        const pileRect = pileArea.getBoundingClientRect();
 
         const handle = (el: Element, idx: number) => {
             const rect = el.getBoundingClientRect();
